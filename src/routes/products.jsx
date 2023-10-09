@@ -1,13 +1,14 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 import {Link} from 'react-router-dom';
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart } from '../cartSlice';
 
 const bull = (
   <Box
@@ -18,6 +19,9 @@ const bull = (
 );
 export default function Products() {
     const [products, setProducts] = useState([]);
+    const dispatch = useDispatch();
+    const carts = useSelector((state) => state.cart.carts);
+
     
   useEffect(() => {
     fetch(`https://dummyjson.com/products/`)
@@ -27,9 +31,8 @@ export default function Products() {
       });
   },[]);
 
-const [cart, setCart] = useState([]);
   const handleOnClick = (product) => {
-    setCart([...cart, product ])
+    dispatch(addToCart(product));
   }
   
   const title = products.map ((product) => 
@@ -52,7 +55,7 @@ const [cart, setCart] = useState([]);
         <Typography variant="h5" component="div">
           Available products
         <br />
-          Available cart: {cart.length}
+          Available cart: {carts.length}
         </Typography>
   <div style={{display: 'flex', flexWrap: 'wrap'}}> 
     {title}
