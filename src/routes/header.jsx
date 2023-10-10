@@ -19,8 +19,8 @@ export default function Header() {
           </Link>
           
           <div className='nav-links'>
-          <Link to = "/signup">Signup</Link>
-          <Link to = "/login">Login</Link>
+              <Link to = "/signup">Signup</Link>
+              <Link to = "/login">Login</Link>
           </div>
         </Toolbar>
       </AppBar>
