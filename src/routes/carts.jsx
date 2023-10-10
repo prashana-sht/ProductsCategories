@@ -1,40 +1,40 @@
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
-import { Link } from "react-router-dom";
-import { useSelector } from 'react-redux';
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}));
+import { useDispatch, useSelector } from 'react-redux';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import {removeFromCart} from "../cartSlice"
 
 export default function Carts() {
   const carts = useSelector((state) => state.cart.carts);
-  
+  const dispatch = useDispatch();
+
+  const handleRemove = (cart) => {
+    dispatch(removeFromCart(cart));
+  }
+
   const cartid = carts.map ((cart) => 
-  <div style={{display: 'flex', flexWrap:'wrap'}}> 
-    <li>{cart.id}</li> &emsp;
-    <Link to = {`/carts/${cart.id}`}> Show cart</Link>
-   </div>
+  <Card sx={{ minWidth: 275, minHeight: 200}}>
+        <CardContent>
+        <Typography variant="h5" component="div">
+          {cart.title}
+        </Typography>
+        <img src={cart.thumbnail} alt=""  style={{ height: '300px', width: '300px', objectFit:'cover'}}/>
+        <br/> <br/>
+        <Button onClick= {() => handleRemove(cart) } size="small"> Remove cart</Button> <br/><br/>
+        </CardContent>
+        </Card>
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={2} columns={16}>
-        <Grid item xs={8}>
-          <h3>Available Carts</h3>
-          <Item>{cartid}</Item>
-        </Grid>
-        <Grid item xs={8}>
-        <h3>Total no. of quantity inside the cart {carts.length}</h3>
-        </Grid>
-      </Grid>
-    </Box>
+    <>
+        <Typography variant="h5" component="div">
+        <h3>Total no. of quantity inside the cart: {carts.length}</h3>
+        </Typography>
+      <div style={{display: 'flex', flexWrap: 'wrap'}}> 
+        {cartid}
+      </div>
+  </>
   );
 }
