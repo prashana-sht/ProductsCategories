@@ -76,10 +76,22 @@ export default function Login() {
   })
   };  
 
-  return (
+  return (<>
+  {isLoggedIn ? (
+        <Button onClick={Logout}
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+        >
+          Log Out
+        </Button>
+  ) : (
+    
     <ThemeProvider theme={defaultTheme}>
+      
       <Container component="main" maxWidth="xs">
         <CssBaseline />
+        
         <Box
           sx={{
             marginTop: 8,
@@ -94,6 +106,7 @@ export default function Login() {
           <Typography component="h1" variant="h5">
             Log in
           </Typography>
+          
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
@@ -121,16 +134,7 @@ export default function Login() {
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />  
-            {isLoggedIn ? (
-              <Button onClick={Logout}
-              // type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Log Out
-            </Button>
-            ) : (
+
               <Button 
               type="submit"
               fullWidth
@@ -139,8 +143,7 @@ export default function Login() {
             >
               Log In
             </Button>
-            )}         
-            
+                   
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
@@ -158,5 +161,7 @@ export default function Login() {
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
+    )}  
+    </>
   );
 }
