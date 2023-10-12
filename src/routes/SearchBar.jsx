@@ -3,6 +3,7 @@ import { styled, alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
+import { useState } from 'react';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -27,13 +28,13 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  // position: 'fixed'
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
     width: '100%',
@@ -46,18 +47,46 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function SearchBar() {
+const SearchBar = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchProducts, setSearchProducts] = useState([]);
+
+  const handleInputChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const fetchData = () => {
+    
+      fetch(`https://dummyjson.com/products/category/${searchTerm}`)
+      .then((res) => res.json())
+            .then((data) => {
+              setSearchProducts(data.products);
+            })
+  };
+  
   return (
     <Box sx={{ flexGrow: 1, float: 'right'}}>
           <Search>
             <SearchIconWrapper>
-              <SearchIcon />
+              <SearchIcon/>
             </SearchIconWrapper>
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
+              type='text'
+              value={searchTerm}
+              onChange={handleInputChange}
             />
+            <button onClick={fetchData}>Search</button>
+            <ul>
+
+            {searchProducts.map((product) => (
+          <li key={product.id}>{product.title}</li>
+        ))}
+      </ul>
           </Search>
     </Box>
   );
 }
+
+export default SearchBar;
