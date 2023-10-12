@@ -1,7 +1,8 @@
 import React from 'react'
 import { Link, Outlet } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-
+// import { Search } from '@mui/icons-material'
+import Search from './SearchBar'
 const Sidebar = () => {
     const [categories, setCategories] = useState([])
 
@@ -28,6 +29,7 @@ const Sidebar = () => {
                     </nav>
                 </div>
                 <div id="detail">
+                <Search />
                     <Outlet />
                 </div>
             </div>
