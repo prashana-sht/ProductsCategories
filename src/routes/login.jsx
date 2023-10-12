@@ -12,7 +12,10 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useState, useEffect } from 'react';
+// import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { login, logout } from '../loginSlice';
+import { Navigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -26,40 +29,14 @@ function Copyright(props) {
     </Typography>
   );
 }
-
 const defaultTheme = createTheme();
-
 export default function Login() {
+  const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
+  const dispatch = useDispatch();
 
-  const [isLoggedIn, setLoggedIn] = useState(false);
-
-  useEffect(() => {
-
-    const token = localStorage.getItem("token");
-    if (token) {
-      setLoggedIn(true);
-    }
-    else{
-      setLoggedIn(false);
-    }
-  },[]);
-
-  function Logout(){
-    localStorage.removeItem("token");
-    setLoggedIn(false);
-    console.log("logout")
-  }
- 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-      // localStorage.email = data.get('email'),
-      // localStorage.password = data.get('password'),
 
     fetch('https://dummyjson.com/auth/login', {
       method: 'POST',
@@ -71,27 +48,18 @@ export default function Login() {
     })
   .then(res => res.json())
   .then((data) => {
+    console.log(data);
     localStorage.setItem("token", data.token);
-    setLoggedIn(true);
+    dispatch(login({token: data.token}));
   })
-  };  
-
+  };
   return (<>
   {isLoggedIn ? (
-        <Button onClick={Logout}
-          fullWidth
-          variant="contained"
-          sx={{ mt: 3, mb: 2 }}
-        >
-          Log Out
-        </Button>
+        <Navigate to="/profile" replace={true} />
   ) : (
-    
     <ThemeProvider theme={defaultTheme}>
-      
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        
         <Box
           sx={{
             marginTop: 8,
@@ -106,7 +74,6 @@ export default function Login() {
           <Typography component="h1" variant="h5">
             Log in
           </Typography>
-          
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
@@ -133,9 +100,8 @@ export default function Login() {
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
-            />  
-
-              <Button 
+            />
+              <Button
               type="submit"
               fullWidth
               variant="contained"
@@ -143,7 +109,6 @@ export default function Login() {
             >
               Log In
             </Button>
-                   
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
@@ -161,7 +126,7 @@ export default function Login() {
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
-    )}  
+    )}
     </>
   );
 }

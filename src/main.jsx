@@ -15,6 +15,7 @@ import Cart from './routes/cartDetails'
 import Signup from './routes/signup';
 import Login from './routes/login';
 import Sidebar from './routes/sidebar';
+import Profile from './routes/profile';
 
 const router = createBrowserRouter([
   
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
           {
             path: "login/",
             element: <Login />
+          },
+          {
+            path: "profile/",
+            element: <Profile />
           },
           ]
       }
