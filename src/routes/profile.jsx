@@ -1,49 +1,31 @@
 import React from 'react'
-import { useEffect, useState } from "react";
+import { useSelector } from 'react-redux';
 
 const profile = () => {
-  const [user, setUser] = useState({});
-  useEffect(() => {
-    fetch("https://dummyjson.com/users/1")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setUser(data);
-      });
-  }, []);
+  const email= useSelector((state) => state.login.email);
+  const firstName= useSelector((state) => state.login.firstName);
+  const lastName= useSelector((state) => state.login.lastName);
+  const username= useSelector((state) => state.login.username);
+  const image= useSelector((state) => state.login.image);
+
   return (
     <>
       <div className="myProfile">
-      <h1>User Information</h1>
+      <h1>User Profile</h1>
       <hr></hr>
         <p>
-          <b>ID: </b> {user.id}
+          <b>Email: </b> {email}
         </p>
         <p>
-          <b>FirstName: </b> {user.firstName}
+          <b>FirstName: </b> {firstName}
         </p>
         <p>
-          <b>LastName: </b>  {user.lastName}
+          <b>LastName: </b>  {lastName}
         </p>
         <p>
-          <b>MaidenName: </b> {user.maidenName}
+          <b>UserName: </b> {username}
         </p>
-        <p>
-          <b>Age: </b> {user.age}
-        </p>
-        <p>
-          <b>Gender:</b> {user.gender}
-        </p>
-        <p>
-          <b>Email: </b> {user.email}
-        </p>
-        <p>
-          <b>Phone No:</b> {user.phone}
-        </p>
-        <p>
-          <b>UserName: </b> {user.username}
-        </p>
-          <img src ={user.image} />
+          <img src ={image} />
       </div>
     </>
   );

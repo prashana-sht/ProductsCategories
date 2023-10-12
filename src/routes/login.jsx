@@ -50,7 +50,23 @@ export default function Login() {
   .then((data) => {
     console.log(data);
     localStorage.setItem("token", data.token);
-    dispatch(login({token: data.token}));
+    localStorage.setItem("email", data.email);
+    localStorage.setItem("username", data.username);
+    localStorage.setItem("image", data.image);
+    localStorage.setItem("firstName", data.firstName);
+    localStorage.setItem("lastName", data.lastName);
+
+    dispatch(login(
+      {
+      token: data.token, 
+      email: data.email, 
+      username: data.username, 
+      image: data.image, 
+      firstName: data.firstName, 
+      lastName: data.lastName 
+    }
+      ))  
+    ;
   })
   };
   return (<>

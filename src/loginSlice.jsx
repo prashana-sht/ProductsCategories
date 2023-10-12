@@ -6,15 +6,28 @@ export const loginSlice = createSlice({
     isLoggedIn: false,
     token: null,
     email: null,
+    firstName: null,
+    lastName: null,
+    image: null,
   },
   reducers: {
     login: (state, action) => {
       console.log(action.payload, "action");
       state.isLoggedIn = true;
-      // (action.payload.token);
+      state.token = action.payload.token;
+      state.email = action.payload.email;
+      state.firstName = action.payload.firstName;
+      state.lastName = action.payload.lastName;
+      state.image = action.payload.image;
+      state.username = action.payload.username;
     },
-    logout: (state, action) => {
+    logout: (state) => {
       state.isLoggedIn = false;
+      state.token = null;
+      state.email = null;
+      state.firstName = null;
+      state.lastName = null;
+      state.image = null;
     },
   }
 })
