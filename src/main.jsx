@@ -1,76 +1,69 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import Root from "./routes/root";
+import Root from './routes/root'
 import store from './store'
 import { Provider } from 'react-redux'
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css'
-import Products from './routes/products';
-import Carts from './routes/carts';
-import ProductDetails from './routes/productDetails';
-import Cart from './routes/cartDetails'
-import Signup from './routes/signup';
-import Login from './routes/login';
-import Sidebar from './routes/sidebar';
-import Profile from './routes/profile';
+import Products from './routes/products'
+import ProductDetails from './routes/productDetails'
+import Signup from './routes/signup'
+import Login from './routes/login'
+import Sidebar from './routes/sidebar'
+import Profile from './routes/profile'
+import { Category } from '@mui/icons-material'
+import CategoryDetails from './routes/categoryDetails'
 
 const router = createBrowserRouter([
-  
-  {
-    path: "/",
-    element: <Root />,
-  
+    {
+        path: '/',
+        element: <Root />,
+
         children: [
-          {
-            path: "/",
-            element:<Sidebar />,
-            children: [
             {
-              path:"/",
-              element: <Products />,
+                path: '/',
+                element: <Sidebar />,
+                children: [
+                    {
+                        path: '/categories/:categoryID',
+                        element: <CategoryDetails />,
+                    },
+                    {
+                        path: '/',
+                        element: <Products />,
+                    },
+                    {
+                        path: 'products/',
+                        element: <Products />,
+                    },
+        
+                    {
+                        path: 'product/:productId',
+                        element: <ProductDetails />,
+                    },
+                   
+                ],
             },
             {
-              path:"products/",
-              element: <Products />,
+                path: 'signup/',
+                element: <Signup />,
             },
             {
-              path:"carts/",
-              element: <Carts />,
+                path: 'login/',
+                element: <Login />,
             },
             {
-              path: "product/:productId",
-              element: <ProductDetails />
+                path: 'profile/',
+                element: <Profile />,
             },
-            {
-              path: "carts/:cartId",
-              element: <Cart />
-              }
-            ]
-          },
-          {
-          path: "signup/",
-          element: <Signup />
-          },
-          {
-            path: "login/",
-            element: <Login />
-          },
-          {
-            path: "profile/",
-            element: <Profile />
-          },
-          ]
-      }
-    ]
-)
+        ],
+    },
+])
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <Provider store={store}>
-    <RouterProvider router={router} />
-    </Provider>
-  </React.StrictMode>,
+    <React.StrictMode>
+        <Provider store={store}>
+            <RouterProvider router={router} />
+        </Provider>
+    </React.StrictMode>
 )
