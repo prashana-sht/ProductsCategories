@@ -4,6 +4,14 @@ import Box from '@mui/material/Box';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import { useState } from 'react';
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
+import CardActions from '@mui/material/CardActions'
+import CardMedia from '@mui/material/CardMedia'
+import { Link, useParams } from 'react-router-dom'
+
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -63,8 +71,30 @@ const SearchBar = () => {
               setSearchProducts(data.products);
             })
   };
+
+  const searchResult = searchProducts.map((product) => (
+    <div key={product.id} style={{ width: '30%', padding: '10px' }}>
+    <Card className="cards" sx={{ minWidth: 275, minHeight: 200 }}>
+        <CardMedia sx={{ height: 140 }} image={product.thumbnail} />
+        <CardContent>
+            <Typography gutterBottom variant="h5" component="div">
+                {product.title}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+                {product.description}
+            </Typography>
+        </CardContent>
+        <CardActions>
+            <Link to={`/product/${product.id}`} size="small">
+                <Button size="small">Show details</Button>
+            </Link>
+            &emsp;
+        </CardActions>
+    </Card>
+</div>
+))
   
-  return (
+  return (<>
     <Box sx={{ flexGrow: 1, float: 'right'}}>
           <Search>
             <SearchIconWrapper>
@@ -78,14 +108,16 @@ const SearchBar = () => {
               onChange={handleInputChange}
             />
             <button onClick={fetchData}>Search</button>
-            <ul>
 
-            {searchProducts.map((product) => (
-          <li key={product.id}>{product.title}</li>
-        ))}
-      </ul>
+
           </Search>
     </Box>
+    <Typography variant="h3" component="div">
+      {searchTerm}
+    </Typography>
+ 
+    <div style={{ display: 'flex', flexWrap: 'wrap', marginTop: "30px" }}>{searchResult}</div>
+  </>
   );
 }
 
