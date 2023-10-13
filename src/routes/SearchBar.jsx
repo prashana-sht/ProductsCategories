@@ -3,7 +3,7 @@ import { styled, alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import { useState } from 'react';
+import { useState, useEffect} from 'react';
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button'
@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography'
 import CardActions from '@mui/material/CardActions'
 import CardMedia from '@mui/material/CardMedia'
 import { Link, useParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -56,21 +57,28 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const SearchBar = () => {
+  const location = useLocation();
+  console.log(location);
+  const searchParams = new URLSearchParams(location.search);
+  const query = searchParams.get('q');
+  console.log(query);
+
   const [searchTerm, setSearchTerm] = useState('');
   const [searchProducts, setSearchProducts] = useState([]);
 
   const handleInputChange = (e) => {
     setSearchTerm(e.target.value);
   };
-
   const fetchData = () => {
-    
-      fetch(`https://dummyjson.com/products/category/${searchTerm}`)
+      fetch(`https://dummyjson.com/products/search?q=${query}`)
       .then((res) => res.json())
             .then((data) => {
               setSearchProducts(data.products);
             })
-  };
+};
+useEffect (() =>{   
+  fetchData()
+}, [])
 
   const searchResult = searchProducts.map((product) => (
     <div key={product.id} style={{ width: '30%', padding: '10px' }}>
@@ -107,9 +115,9 @@ const SearchBar = () => {
               value={searchTerm}
               onChange={handleInputChange}
             />
-            <button onClick={fetchData}>Search</button>
-
-
+            <Link to= {`/search?q=${searchTerm}`}>
+              <button onClick={fetchData}>Search</button>
+            </Link>
           </Search>
     </Box>
     <Typography variant="h3" component="div">

@@ -61,6 +61,14 @@ export default function Header() {
                                         Profile
                                     </Button>
                                 </Link>
+                                
+                                <Link to = {`/search`}>
+                                <Button
+                                        fullWidth
+                                        variant="contained"
+                                        sx={{ mt: 3, mb: 2 }}
+                                    >Search</Button>
+                                </Link>
 
                                 <Link to="/login">
                                     <Button
@@ -93,6 +101,7 @@ export default function Header() {
                                         Login
                                     </Button>
                                 </Link>
+                                
                             </>
                         )}
                     </div>

@@ -13,6 +13,7 @@ import Sidebar from './routes/sidebar'
 import Profile from './routes/profile'
 import { Category } from '@mui/icons-material'
 import CategoryDetails from './routes/categoryDetails'
+import SearchBar from './routes/SearchBar'
 
 const router = createBrowserRouter([
     {
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
                         path: '/categories/:categoryID',
                         element: <CategoryDetails />,
                     },
+                    
                     {
                         path: '/',
                         element: <Products />,
@@ -55,6 +57,10 @@ const router = createBrowserRouter([
             {
                 path: 'profile/',
                 element: <Profile />,
+            },
+            {
+                path: 'search/',
+                element: <SearchBar />,
             },
         ],
     },

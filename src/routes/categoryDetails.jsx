@@ -7,7 +7,6 @@ import CardActions from '@mui/material/CardActions'
 import CardMedia from '@mui/material/CardMedia'
 import { Link, useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import SearchBar from './SearchBar'
 
 const CategoryDetails = () => {
     const { categoryID } = useParams()

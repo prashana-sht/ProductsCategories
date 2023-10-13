@@ -1,8 +1,7 @@
 import React from 'react'
-import { Link, Outlet } from 'react-router-dom'
+import { NavLink, Outlet } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-// import { Search } from '@mui/icons-material'
-import Search from './SearchBar'
+
 const Sidebar = () => {
     const [categories, setCategories] = useState([])
 
@@ -15,9 +14,9 @@ const Sidebar = () => {
     }, [])
 
     const cate = categories.map((categoryID) => (
-        <Link to={`/categories/${categoryID}`}>
+        <NavLink to={`/categories/${categoryID}`}>
             {categoryID}
-        </Link>
+        </NavLink>
     ))
 
     return (
@@ -29,7 +28,8 @@ const Sidebar = () => {
                     </nav>
                 </div>
                 <div id="detail">
-                <Search />
+                
+                {/* <Search /> */}
                     <Outlet />
                 </div>
             </div>

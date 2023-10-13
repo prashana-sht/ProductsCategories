@@ -132,7 +132,6 @@ i {
 }
 .products{
   text-align: center;
-  
 }
 
 .nav-links{
@@ -144,4 +143,8 @@ i {
 .type{
   text-transform: capitalize;
   margin-bottom: 100px;
+}
+
+.searchButton{
+  float: right;
 }
